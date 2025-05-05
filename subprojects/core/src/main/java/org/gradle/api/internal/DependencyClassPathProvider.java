@@ -25,6 +25,7 @@ import org.gradle.internal.classpath.ClassPath;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.gradle.api.internal.artifacts.dsl.dependencies.DependencyFactoryInternal.ClassPathNotation.GRADLE_API;
 import static org.gradle.api.internal.artifacts.dsl.dependencies.DependencyFactoryInternal.ClassPathNotation.GRADLE_KOTLIN_DSL;
@@ -51,13 +52,10 @@ public class DependencyClassPathProvider implements ClassPathProvider {
         "groovy",
         "groovy-ant",
         "groovy-astbuilder",
-        "groovy-console",
         "groovy-datetime",
         "groovy-dateutil",
-        "groovy-groovydoc",
         "groovy-json",
         "groovy-nio",
-        "groovy-sql",
         "groovy-templates",
         "groovy-xml"
     );
@@ -124,7 +122,6 @@ public class DependencyClassPathProvider implements ClassPathProvider {
         for (String groovyModule : GROOVY_MODULES) {
             groovy = groovy.plus(moduleRegistry.getExternalModule(groovyModule).getClasspath());
         }
-        groovy = groovy.plus(moduleRegistry.getExternalModule("javaparser-core").getClasspath());
         return groovy;
     }
 

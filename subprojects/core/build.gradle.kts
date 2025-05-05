@@ -151,12 +151,9 @@ dependencies {
 
     // Libraries that are not used in this project but required in the distribution
     runtimeOnly(libs.groovyAstbuilder)
-    runtimeOnly(libs.groovyConsole)
     runtimeOnly(libs.groovyDateUtil)
     runtimeOnly(libs.groovyDatetime)
-    runtimeOnly(libs.groovyDoc)
     runtimeOnly(libs.groovyNio)
-    runtimeOnly(libs.groovySql)
 
     testImplementation(projects.buildInit)
     testImplementation(projects.platformJvm)
