@@ -18,7 +18,6 @@ package org.gradle.api.plugins.quality.internal;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
-import com.google.common.util.concurrent.Callables;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Task;
@@ -38,7 +37,6 @@ import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.internal.Cast;
 
 import javax.inject.Inject;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
@@ -60,7 +58,7 @@ public abstract class AbstractCodeQualityPlugin<T> implements Plugin<ProjectInte
         project.getPluginManager().apply(ReportingBasePlugin.class);
         createConfigurations();
         extension = createExtension();
-        configureExtensionRule();
+        configureExtensionRule(project);
         configureTaskRule();
         configureSourceSetRule();
         configureCheckTask();
@@ -130,26 +128,15 @@ public abstract class AbstractCodeQualityPlugin<T> implements Plugin<ProjectInte
     protected abstract CodeQualityExtension createExtension();
 
     @SuppressWarnings("rawtypes")
-    private void configureExtensionRule() {
-        final ConventionMapping extensionMapping = conventionMappingOf(extension);
-        extensionMapping.map("sourceSets", Callables.returning(new ArrayList<>()));
-        extensionMapping.map("reportsDir", new Callable<File>() {
-            @Override
-            public File call() {
-                return project.getExtensions().getByType(ReportingExtension.class).file(getReportName());
+    private void configureExtensionRule(ProjectInternal project) {
+        extension.getReportsDirProperty().convention(project.provider(() -> AbstractCodeQualityPlugin.this.project.getExtensions().getByType(ReportingExtension.class).file(getReportName())));
+        extension.getSourceSetsProperty().convention(project.provider(() -> {
+            if (project.getPlugins().hasPlugin(getBasePlugin())) {
+                return new ArrayList<>();
+            } else {
+                return getJavaPluginExtension().getSourceSets();
             }
-        });
-        withBasePlugin(new Action<Plugin>() {
-            @Override
-            public void execute(Plugin plugin) {
-                extensionMapping.map("sourceSets", new Callable<SourceSetContainer>() {
-                    @Override
-                    public SourceSetContainer call() {
-                        return getJavaPluginExtension().getSourceSets();
-                    }
-                });
-            }
-        });
+        }));
     }
 
     @SuppressWarnings("unchecked")

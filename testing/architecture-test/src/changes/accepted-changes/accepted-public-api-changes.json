@@ -1041,6 +1041,14 @@
             ]
         },
         {
+            "type": "org.gradle.api.plugins.quality.CodeQualityExtension",
+            "member": "Constructor org.gradle.api.plugins.quality.CodeQualityExtension()",
+            "acceptation": "New constructor to inject project reference",
+            "changes": [
+                "Constructor has been removed"
+            ]
+        },
+        {
             "type": "org.gradle.api.provider.Provider",
             "member": "Method org.gradle.api.provider.Provider.forUseAtConfigurationTime()",
             "acceptation": "Deprecated method removed",

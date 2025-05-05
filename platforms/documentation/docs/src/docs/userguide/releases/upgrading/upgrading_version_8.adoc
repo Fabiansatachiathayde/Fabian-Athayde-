@@ -565,6 +565,12 @@ plugins {
 TIP: The `jvm-toolchains` plugin is automatically applied by the <<java_library_plugin.adoc#java_library_plugin,Java Library Plugin>> and other JVM-related plugins.
 If you are already applying one of those, no further action is needed.
 
+
+=== Changes in CodeQualityExtension implementation
+
+The link:{javadocPath}/org/gradle/api/plugins/quality/CodeQualityExtension.html[`CodeQualityExtension`] class now requires a `Project` reference for creation.
+Some plugins may extend this class and should be adjusted accordingly.
+
 [[changes_8.14]]
 == Upgrading from 8.13 and earlier
 

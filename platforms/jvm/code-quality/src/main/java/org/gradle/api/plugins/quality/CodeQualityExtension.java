@@ -15,6 +15,10 @@
  */
 package org.gradle.api.plugins.quality;
 
+import org.gradle.api.Incubating;
+import org.gradle.api.Project;
+import org.gradle.api.provider.Property;
+import org.gradle.api.provider.SetProperty;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.internal.instrumentation.api.annotations.ToBeReplacedByLazyProperty;
 
@@ -26,10 +30,30 @@ import java.util.Collection;
  */
 public abstract class CodeQualityExtension {
 
+    /**
+     * The current project.
+     *
+     * @since 9.0
+     */
+    @Incubating
+    protected final Project project;
     private String toolVersion;
-    private Collection<SourceSet> sourceSets;
+    private SetProperty<SourceSet> sourceSets;
     private boolean ignoreFailures;
-    private File reportsDir;
+    private Property<File> reportsDir; // TODO (donat) should be DirectoryProperty; Property<File> to keep semantics as close as possible to the original code
+
+    /**
+     * Constructor.
+     *
+     * @param project the current project.
+     * @since 9.0
+     */
+    @Incubating
+    protected CodeQualityExtension(Project project) {
+        this.project = project;
+        this.reportsDir = project.getObjects().property(File.class);
+        this.sourceSets = project.getObjects().setProperty(SourceSet.class);
+    }
 
     /**
      * The version of the code quality tool to be used.
@@ -51,14 +75,14 @@ public abstract class CodeQualityExtension {
      */
     @ToBeReplacedByLazyProperty(comment = "Should this be lazy?")
     public Collection<SourceSet> getSourceSets() {
-        return sourceSets;
+        return sourceSets.get();
     }
 
     /**
      * The source sets to be analyzed as part of the <code>check</code> and <code>build</code> tasks.
      */
     public void setSourceSets(Collection<SourceSet> sourceSets) {
-        this.sourceSets = sourceSets;
+        this.sourceSets.set(sourceSets);
     }
 
     /**
@@ -85,13 +109,34 @@ public abstract class CodeQualityExtension {
      */
     @ToBeReplacedByLazyProperty
     public File getReportsDir() {
-        return reportsDir;
+        return reportsDir.get();
     }
 
     /**
      * The directory where reports will be generated.
      */
     public void setReportsDir(File reportsDir) {
-        this.reportsDir = reportsDir;
+        this.reportsDir.set(reportsDir);
+    }
+
+    /**
+     * Visible for internal use only!
+     *
+     * @return the reports directory property
+     * @since 9.0
+     */
+    @Incubating
+    public Property<File> getReportsDirProperty() {
+        return reportsDir;
+    }
+
+    /**
+     * Visible for internal use only!
+     * @return the source sets property
+     * @since 9.0
+     */
+    @Incubating
+    public SetProperty<SourceSet> getSourceSetsProperty() {
+        return sourceSets;
     }
 }

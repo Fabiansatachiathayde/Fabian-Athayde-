@@ -35,8 +35,6 @@ import java.util.List;
  */
 public abstract class PmdExtension extends CodeQualityExtension {
 
-    private final Project project;
-
     private TargetJdk targetJdk;
     private TextResource ruleSetConfig;
     private ConfigurableFileCollection ruleSetFiles;
@@ -48,7 +46,7 @@ public abstract class PmdExtension extends CodeQualityExtension {
     private final Property<Integer> threads;
 
     public PmdExtension(Project project) {
-        this.project = project;
+        super(project);
         this.rulesMinimumPriority = project.getObjects().property(Integer.class);
         this.incrementalAnalysis = project.getObjects().property(Boolean.class);
         this.maxFailures = project.getObjects().property(Integer.class);

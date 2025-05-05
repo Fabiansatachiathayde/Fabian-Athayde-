@@ -35,8 +35,6 @@ import java.util.Map;
  */
 public abstract class CheckstyleExtension extends CodeQualityExtension {
 
-    private final Project project;
-
     private TextResource config;
     private Map<String, Object> configProperties = new LinkedHashMap<>();
     private int maxErrors;
@@ -46,7 +44,7 @@ public abstract class CheckstyleExtension extends CodeQualityExtension {
     private final Property<Boolean> enableExternalDtdLoad;
 
     public CheckstyleExtension(Project project) {
-        this.project = project;
+        super(project);
         this.configDirectory = project.getObjects().directoryProperty();
         this.enableExternalDtdLoad = project.getObjects().property(Boolean.class).convention(false);
     }
