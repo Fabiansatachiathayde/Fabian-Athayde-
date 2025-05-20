@@ -39,6 +39,12 @@ The previous step will help you identify potential problems by issuing deprecati
 [[changes_9.0]]
 == Upgrading from 8.14 and earlier
 
+=== Removed APIs
+
+==== JvmVendorSpec.IBM_SEMERU
+
+The deprecated `JvmVendorSpec.IBM_SEMERU` constant has been removed. Its usage should be replaced by link:{javadocPath}/org/gradle/jvm/toolchain/JvmVendorSpec.html#IBM[`JvmVendorSpec.IBM`].
+
 === Potential breaking changes
 
 ==== Lowest supported Kotlin Gradle Plugin version change
@@ -316,6 +322,12 @@ plugins {
 ----
 
 We strongly encourage users to adopt the latest released version of the https://plugins.gradle.org/plugin/com.gradle.develocity[Develocity plugin], even when using it with older versions of Gradle.
+
+==== C++ and Swift plugins no longer depend on software model based plugins
+
+<<cpp_application_plugin.adoc#cpp_application_plugin,Cpp Application Plugin>>, <<cpp_library_plugin.adoc#cpp_library_plugin,Cpp Library Plugin>>, <<swift_application_plugin.adoc#swift_application_plugin,Swift Application Plugin>>, and <<swift_library_plugin.adoc#swift_library_plugin,Swift Library Plugin>> have been updated and no longer rely on the software model plugin infrastructure.
+
+As a result, `toolChains` should now be configured directly at the top-level of your build script instead of within a `model { }` block.
 
 ==== Removal of eager artifact configuration accessors in Kotlin DSL
 
@@ -2952,8 +2964,8 @@ The concept of conventions is outdated and superseded by <<implementing_gradle_p
 
 To reflect this in the Gradle API, the following elements are deprecated:
 
-- link:{javadocPath}/org/gradle/api/Project.html#getConvention--[org.gradle.api.Project.getConvention()]
-- link:{javadocPath}/org/gradle/api/plugins/Convention.html[org.gradle.api.plugins.Convention]
+- `org.gradle.api.Project.getConvention()
+- `org.gradle.api.plugins.Convention`
 - `org.gradle.api.internal.HasConvention`
 
 Gradle Core plugins still register their conventions in addition to their extensions for backwards compatibility.
