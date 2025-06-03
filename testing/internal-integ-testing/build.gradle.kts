@@ -106,6 +106,7 @@ dependencies {
     implementation(projects.serviceProvider)
     implementation(projects.serviceRegistryBuilder)
     implementation(projects.time)
+    implementation(projects.toolingApi)
     implementation(projects.wrapperShared)
 
     implementation(testFixtures(projects.buildOperations))
@@ -114,7 +115,6 @@ dependencies {
     implementation(libs.ansiControlSequenceUtil)
     implementation(libs.commonsCompress)
     implementation(libs.commonsLang)
-    implementation(libs.commonsLang3)
     implementation(libs.commonsIo)
     implementation(libs.groovyJson)
     implementation(libs.httpcore)

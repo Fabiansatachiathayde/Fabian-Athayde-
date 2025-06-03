@@ -15,7 +15,7 @@
  */
 package org.gradle.api.publish.internal.component;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.gradle.api.Action;
 import org.gradle.api.InvalidUserCodeException;
 import org.gradle.api.InvalidUserDataException;
@@ -57,6 +57,7 @@ public class ConfigurationVariantMapping {
     public void collectVariants(Consumer<UsageContext> collector) {
         outgoingConfiguration.runDependencyActions();
         outgoingConfiguration.markAsObserved("published as a variant");
+        outgoingConfiguration.markDependenciesObserved();
         String outgoingConfigurationName = outgoingConfiguration.getName();
 
         if (!outgoingConfiguration.isTransitive()) {

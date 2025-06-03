@@ -26,9 +26,9 @@ val kotlinVersion = providers.gradleProperty("buildKotlinVersion")
 
 dependencies {
     constraints {
-        api("org.gradle.guides:gradle-guides-plugin:0.23.4")
+        api("org.gradle.guides:gradle-guides-plugin:0.24.0")
         api("org.apache.ant:ant:1.10.15") // Bump the version brought in transitively by gradle-guides-plugin
-        api("com.gradle:develocity-gradle-plugin:4.0.1") // Run `java build-logic-settings/UpdateDevelocityPluginVersion.java <new-version>` to update
+        api("com.gradle:develocity-gradle-plugin:4.0.2") // Run `java build-logic-settings/UpdateDevelocityPluginVersion.java <new-version>` to update
         api("com.gradle.publish:plugin-publish-plugin:1.3.1")
         api("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:1.1.10")
         api("me.champeau.gradle:japicmp-gradle-plugin:0.4.1")
@@ -56,18 +56,16 @@ dependencies {
         api("com.google.code.findbugs:jsr305:3.0.2")
         api("org.jspecify:jspecify:1.0.0")
         api("commons-io:commons-io:2.14.0")
-        api("commons-lang:commons-lang:2.6")
+        api("org.apache.commons:commons-lang3:3.17.0")
         api("javax.activation:activation:1.1.1")
-        api("javax.xml.bind:jaxb-api:2.3.1")
-        api("com.sun.xml.bind:jaxb-core:2.2.11")
-        api("com.sun.xml.bind:jaxb-impl:2.2.11")
+        api("jakarta.xml.bind:jakarta.xml.bind-api:4.0.2")
+        api("com.sun.xml.bind:jaxb-impl:4.0.5")
         api("junit:junit:4.13.2")
         api("org.spockframework:spock-core:$spockVersion")
         api("org.spockframework:spock-junit4:$spockVersion")
         api("org.asciidoctor:asciidoctorj:2.5.13")
         api("org.asciidoctor:asciidoctorj-api:2.5.13")
-        api("dev.adamko.dokkatoo:dokkatoo-plugin:2.3.1")
-        api("org.jetbrains.dokka:dokka-core:1.9.20")
+        api("org.jetbrains.dokka:dokka-gradle-plugin:2.0.0")
         api("com.fasterxml.woodstox:woodstox-core:6.4.0") {
             because("CVE-2022-40152 on lower versions")
         }
@@ -80,7 +78,6 @@ dependencies {
         api("org.jsoup:jsoup:1.15.3")
         api("org.junit.jupiter:junit-jupiter:5.8.2")
         api("org.junit.vintage:junit-vintage-engine:5.8.2")
-        api("org.openmbee.junit:junit-xml-parser:1.0.0")
         api("org.ow2.asm:asm:$asmVersion")
         api("org.ow2.asm:asm-commons:$asmVersion")
         api("org.ow2.asm:asm-tree:$asmVersion")
